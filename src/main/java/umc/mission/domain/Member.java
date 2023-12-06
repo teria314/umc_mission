@@ -1,9 +1,12 @@
 package umc.mission.domain;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import umc.mission.domain.common.BaseEntity;
 import umc.mission.domain.enums.LoginStrategy;
 import umc.mission.domain.enums.Role;
+import umc.mission.domain.mapping.MemberFavoriteFoodType;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +15,8 @@ import java.util.List;
 
 @Entity
 @Getter
+@DynamicUpdate
+@DynamicInsert
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -49,4 +54,7 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Alarm> alarmList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<MemberFavoriteFoodType> memberFavoriteFoodTypeList = new ArrayList<>();
 }
