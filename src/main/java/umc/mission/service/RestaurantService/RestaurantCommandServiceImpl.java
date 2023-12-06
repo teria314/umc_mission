@@ -7,10 +7,12 @@ import umc.mission.common.apiPayload.code.status.ErrorStatus;
 import umc.mission.common.apiPayload.exception.handler.RegionHandler;
 import umc.mission.common.apiPayload.exception.handler.RestaurantCategoryHandler;
 import umc.mission.common.apiPayload.exception.handler.RestaurantHandler;
+import umc.mission.converter.MissionConverter;
 import umc.mission.converter.RestaurantConverter;
 import umc.mission.converter.ReviewConverter;
 import umc.mission.domain.*;
 import umc.mission.repository.*;
+import umc.mission.web.dto.MissionRequestDTO;
 import umc.mission.web.dto.RestaurantRequestDTO;
 import umc.mission.web.dto.ReviewRequestDTO;
 
@@ -28,6 +30,8 @@ public class RestaurantCommandServiceImpl implements RestaurantCommandService {
     private final RestaurantCategoryRepository restaurantCategoryRepository;
 
     private final ReviewRepository reviewRepository;
+
+    private final MissionRepository missionRepository;
 
     private final MemberRepository memberRepository;
 
@@ -57,5 +61,17 @@ public class RestaurantCommandServiceImpl implements RestaurantCommandService {
         newReview.setMember(member.get());
 
         return reviewRepository.save(newReview);
+    }
+
+    @Override
+    @Transactional
+    public Mission createMission(MissionRequestDTO.createDTO request, Long restaurantId) {
+        Mission newMission = MissionConverter.toMission(request);
+
+        Restaurant restaurant = restaurantRepository.findById(restaurantId).orElseThrow(() -> new RestaurantHandler(ErrorStatus.RESTAURANT_NOT_FOUND));
+
+        newMission.setRestaurant(restaurant);
+
+        return missionRepository.save(newMission);
     }
 }
