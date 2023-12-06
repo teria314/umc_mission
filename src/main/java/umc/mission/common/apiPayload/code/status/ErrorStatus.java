@@ -29,7 +29,9 @@ public enum ErrorStatus implements BaseErrorCode {
     //REGION 에러
     REGION_NOT_FOUND(HttpStatus.BAD_REQUEST, "REGION4001", "해당되는 지역이 없습니다"),
 
-    RESTAURANT_CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "RESTAURANT_CATEGORY4001", "해당되는 음식점카테고리가 없습니다")
+    RESTAURANT_CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "RESTAURANT_CATEGORY4001", "해당되는 음식점카테고리가 없습니다"),
+
+    RESTAURANT_NOT_FOUND(HttpStatus.NOT_FOUND, "RESTAURANT4001", "해당되는 음식점이 없습니다")
     ;
 
 
